@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #9b59b6, #000000);
+      color: white;
+    }
+
+    .container {
+      width: 420px;
+      background: #1c1c2e;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    button {
+      width: 70%;
+      margin: 8px auto;
+      display: block;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: #9b59b6;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #status {
+      margin-top: 10px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h3>PDF Automation</h3>
+
+  <button onclick="run1()">▶ Extract PDF</button>
+  <button onclick="run2()">▶ Parse</button>
+  <button onclick="run3()">▶ Match</button>
+
+  <div id="status">Status: Idle</div>
+
+</div>
+
+<script>
+function setStatus(t){
+  document.getElementById("status").innerText = t;
+}
+
+function watchProgress(){
+  setInterval(()=>{
+    google.script.run
+      .withSuccessHandler(res => setStatus(res))
+      .getProgress();
+  },1000);
+}
+
+function run1(){
+  setStatus("Starting...");
+  watchProgress();
+  google.script.run.runExtractRawPDF();
+}
+
+function run2(){
+  setStatus("Running Parse...");
+  google.script.run
+    .withSuccessHandler(()=>setStatus("✅ Parse Done"))
+    .runParseData();
+}
+
+function run3(){
+  setStatus("Running Match...");
+  google.script.run
+    .withSuccessHandler(()=>setStatus("✅ Match Done"))
+    .runMVPMatch();
+}
+</script>
+
+</body>
+</html>
