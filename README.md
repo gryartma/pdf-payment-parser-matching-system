@@ -1,2 +1,1 @@
-# pdf-payment-parser-matching-system
-Google Apps Script automation for extracting structured payment data from PDF receipts, validating records, and matching them against Google Sheets.
+Automates the extraction, parsing, and validation of payment receipt PDFs from Google Drive using Google Apps Script, with intelligent matching against Google Sheets records.
